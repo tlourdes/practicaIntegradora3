@@ -10,14 +10,14 @@ class MoviesCard extends Component{
       }
 
         componentDidMount(){
-            let traido = localStorage.getItem("favoritosPelis")
-            if(traido.includes(this.props.id)){
-                this.setState({
-                    favoritos:true
-                })
-
-            }
+    let traido = localStorage.getItem("favoritosPelis");
+    if(traido !== null){
+        let parseado = JSON.parse(traido);
+        if(parseado.includes(this.props.id)){
+            this.setState({ favoritos:true });
         }
+    }
+}
 
       agregarFavoritos(){
 
