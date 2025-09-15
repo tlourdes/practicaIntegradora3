@@ -1,0 +1,50 @@
+import React, { Component } from "react";
+import SeriesCard from "./SeriesCard";
+import { Link } from "react-router-dom";
+
+class Series extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      series: [],
+    };
+  }
+
+  componentDidMount() {
+    fetch("https://api.themoviedb.org/3/tv/popular?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=1")
+    .then(res => res.json())
+    .then(data => this.setState({ series: data.results }))
+    .catch(err => console.log("Error: " + err));
+  }
+
+  render() {
+    return (
+      <section>
+        <h2>Series Populares</h2>
+        <div className="card-container">
+          {this.state.series.length === 0 ? (
+            <h3>Cargando...</h3>
+          ) : (
+            this.state.series.map(function(show, idx) {
+              return (
+                <SeriesCard
+                  key={idx}
+                  id={show.id}
+                  image={show.poster_path}
+                  name={show.name}
+                  description={show.overview}
+                />
+              );
+            })
+          )}
+        </div>
+
+        <Link to="/ver-todas-series">
+          <button>Ver todas</button>
+        </Link>
+      </section>
+    );
+  }
+}
+
+export default Series;
