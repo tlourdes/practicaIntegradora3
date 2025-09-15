@@ -1,11 +1,17 @@
+
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom'
+import Home from "./screens/Home/Home";
+
+
 function App() {
-  return (
+  return( <Switch>
+  
+    <Route path="/" exact={true} component={Home} />
    
-        <p>
-          react
-        </p>
-      
-  );
+    
+  </Switch>)
+ 
+
 }
 
 export default App;
