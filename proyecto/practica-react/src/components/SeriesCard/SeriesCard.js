@@ -63,7 +63,7 @@ constructor(props) {
         <button>Ir a detalle</button>
       </Link>
 
-         {this.state.favoritos ? <button onClick={() => this.quitarFavoritos()}>eliminar de favoritos</button> : 
+         {this.state.favoritos ? <button onClick={() => this.quitarFavoritos()}>Eliminar de favoritos</button> : 
       <button onClick={() => this.agregarFavoritos()}>Agregar a favoritos</button>}
 
     </article>
