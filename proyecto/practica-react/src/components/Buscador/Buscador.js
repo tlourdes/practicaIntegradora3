@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { Navigate } from "react-router-dom";
 
 class Buscador extends Component {
   constructor(props) {
     super(props);
     this.state = {
       busqueda: "",
-      tipo: "movie", 
-      redirigir: false,
+      tipo: "movie", // valor inicial
     };
   }
 
@@ -19,25 +17,12 @@ class Buscador extends Component {
     this.setState({ tipo: e.target.value });
   }
 
-  enviarFormulario(e) {
-    e.preventDefault();
-    if (this.state.busqueda === "") return;
-    this.setState({ redirigir: true });
-  }
-
   render() {
-    if (this.state.redirigir) {
-      return (
-        <Navigate
-          to={`/search-results?query=${this.state.busqueda}&type=${this.state.tipo}`}
-        />
-      );
-    }
-
     return (
-      <form onSubmit={(e) => this.enviarFormulario(e)}>
+      <form action="/search-results" method="get">
         <input
           type="text"
+          name="query" 
           value={this.state.busqueda}
           onChange={(e) => this.cambiarTexto(e)}
           placeholder="Buscar..."
@@ -47,6 +32,7 @@ class Buscador extends Component {
           <label>
             <input
               type="radio"
+              name="type" 
               value="movie"
               checked={this.state.tipo === "movie"}
               onChange={(e) => this.cambiarTipo(e)}
@@ -56,6 +42,7 @@ class Buscador extends Component {
           <label>
             <input
               type="radio"
+              name="type"
               value="tv"
               checked={this.state.tipo === "tv"}
               onChange={(e) => this.cambiarTipo(e)}
