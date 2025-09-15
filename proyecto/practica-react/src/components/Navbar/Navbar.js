@@ -4,6 +4,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 function Navbar() {
   return (
     <nav>
+        <h1>Clicks</h1>
+        <img src=""></img> 
       <ul className="main-nav">
         <li>
           <Link to="/" >
