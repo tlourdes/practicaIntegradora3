@@ -7,9 +7,7 @@ function Error() {
    return (
       <React.Fragment>
          <Menu />
-         <h1>Error 404</h1>
-         <p> La página que estas buscando no existe </p>
-            <Link to="/">Volver al inicio</Link>
+         <h1>Error</h1>
          <Footer/>
       </React.Fragment>
    )
