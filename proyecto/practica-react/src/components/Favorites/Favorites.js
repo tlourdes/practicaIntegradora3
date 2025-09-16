@@ -1,95 +1,130 @@
-import { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
 
 class Favorites extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      favoriteMovies: [],
-      favoriteSeries: []
+      peliculas: [],
+      series: [],
+      cargando: true
     };
   }
 
   componentDidMount() {
-     let moviesStorage = localStorage.getItem("favoriteMovies");
-    let seriesStorage = localStorage.getItem("favoriteSeries");
-    if (moviesStorage !== null) {
-      this.setState({ favoriteMovies: JSON.parse(moviesStorage) });
+    let peliculas = [];
+    let series = [];
+
+    // cuento los fetchs pendientes para desp hacer el cargando
+    let fetchPendientes = 0;
+
+    // peliculas
+    let favMovies = localStorage.getItem("favoritosPelis");
+    if (favMovies !== null) {
+      favMovies = JSON.parse(favMovies);
+      fetchPendientes += favMovies.length;
+
+      for (let i = 0; i < favMovies.length; i++) {
+        fetch("https://api.themoviedb.org/3/movie/" + favMovies[i] + "?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es")
+          .then(res => res.json())
+          .then(data => {
+            peliculas.push(data);
+            this.setState({ peliculas });
+
+            
+            fetchPendientes--;
+            if (fetchPendientes === 0) {
+              this.setState({ cargando: false });
+            }
+          })
+          .catch(err => {
+            console.error(err);
+            fetchPendientes--;
+            if (fetchPendientes === 0) this.setState({ cargando: false });
+          });
+      }
     }
-    if (seriesStorage !== null) {
-      this.setState({ favoriteSeries: JSON.parse(seriesStorage) });
+
+    // series
+    let favSeries = localStorage.getItem("favoritosSeries");
+    if (favSeries !== null) {
+      favSeries = JSON.parse(favSeries);
+      fetchPendientes += favSeries.length;
+
+      for (let i = 0; i < favSeries.length; i++) {
+        fetch("https://api.themoviedb.org/3/tv/" + favSeries[i] + "?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es")
+          .then(res => res.json())
+          .then(data => {
+            series.push(data);
+            this.setState({ series });
+
+            fetchPendientes--;
+            if (fetchPendientes === 0) this.setState({ cargando: false });
+          })
+          .catch(err => {
+            console.error(err);
+            fetchPendientes--;
+            if (fetchPendientes === 0) this.setState({ cargando: false });
+          });
+      }
+    }
+
+
+    if (fetchPendientes === 0) {
+      this.setState({ cargando: false });
     }
   }
 
+  // para que si borro un favorito deje de aparecer en la pagina
+    removeMovie = (id) => {
+    let favMovies = JSON.parse(localStorage.getItem("favoritosPelis"));
+     let actualizado = favMovies.filter(movieId => movieId !== id);
+    localStorage.setItem("favoritosPelis", JSON.stringify(actualizado));
+    this.setState({ peliculas: this.state.peliculas.filter(p => p.id !== id) });
+       }
 
-
-  removeMovie(id) {
-    let nuevaLista = this.state.favoriteMovies.filter(movie => movie.id !== id);
-    this.setState({ favoriteMovies: nuevaLista });
-    localStorage.setItem("favoriteMovies", JSON.stringify(nuevaLista));
-  }
-
-  removeSeries(id) {
-    let nuevaLista = this.state.favoriteSeries.filter(serie => serie.id !== id);
-    this.setState({ favoriteSeries: nuevaLista });
-    localStorage.setItem("favoriteSeries", JSON.stringify(nuevaLista));
-  }
-
-
+  removeSerie = (id) => {
+      let favSeries = JSON.parse(localStorage.getItem("favoritosSeries"));
+      let actualizado = favSeries.filter(serieId => serieId !== id);
+    localStorage.setItem("favoritosSeries", JSON.stringify(actualizado));
+    this.setState({ series: this.state.series.filter(s => s.id !== id) });
+    }
 
   render() {
+    if (this.state.cargando) {
+      return <p>Cargando...</p>;
+    
+    }
+
     return (
-      <section>
-        <h2>Mis Favoritos</h2>
-
-        <div>
-          <h3>Películas Favoritas</h3>
-          <div className="favoritos">
-            {this.state.favoriteMovies.length === 0 ? (
-              <p>No tenes películas favoritas. </p>
-            ) : (
-              this.state.favoriteMovies.map((movie, idx) => (
-                <div key={idx} className="favorite-card">
-                  <Link to={`/pelicula/${movie.id}`}>
-                    <img
-                      src={`https://image.tmdb.org/t/p/w200${movie.image}`}
-                      alt={movie.name}
-                    />
-                    <h4>{movie.name}</h4>
-                  </Link>
-                  <button onClick={() => this.removeMovie(movie.id)}>
-                    Eliminar de favoritos
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
+      <React.Fragment>
+        <h2>Películas favoritas</h2>
+        <div className="favoritos-container">
+          {this.state.peliculas.length === 0 ? <p>No hay películas en favoritos.</p> :
+            this.state.peliculas.map((pelicula) => (
+              <div key={pelicula.id} className="fav-card">
+                <img src={"https://image.tmdb.org/t/p/w500" + pelicula.poster_path} alt={pelicula.title} />
+                <h3>{pelicula.title}</h3>
+                <p>{pelicula.overview}</p>
+                <button onClick={() => this.removeMovie(pelicula.id)}>Eliminar de favoritos</button>
+              </div>
+            ))
+          }
         </div>
 
-        <div>
-          <h3>Series Favoritas</h3>
-          <div className="favoritos">
-            {this.state.favoriteSeries.length === 0 ? (
-              <p>No tenes series favoritas.</p>
-            ) : (
-              this.state.favoriteSeries.map((serie, idx) => (
-                <div key={idx} className="favorite-card">
-                  <Link to={`/serie/${serie.id}`}>
-                    <img
-                      src={`https://image.tmdb.org/t/p/w200${serie.image}`}
-                      alt={serie.name}
-                    />
-                    <h4>{serie.name}</h4>
-                  </Link>
-                  <button onClick={() => this.removeSeries(serie.id)}>
-                    Eliminar de favoritos
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
+        <h2>Series favoritas</h2>
+        <div className="favoritos-container">
+          {this.state.series.length === 0 ? <p>No hay series en favoritos.</p> :
+            this.state.series.map((serie) => (
+              <div key={serie.id} className="fav-card">
+                <img src={"https://image.tmdb.org/t/p/w500" + serie.poster_path} alt={serie.name} />
+                <h3>{serie.name}</h3>
+                <p>{serie.overview}</p>
+                <button onClick={() => this.removeSerie(serie.id)}>Eliminar de favoritos</button>
+              </div>
+            ))
+          }
         </div>
-      </section>
+      </React.Fragment>
     );
   }
 }

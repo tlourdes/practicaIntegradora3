@@ -14,11 +14,12 @@ class MoviesCard extends Component{
     if(traido !== null){
         let parseado = JSON.parse(traido);
         if(parseado.includes(this.props.id)){
-            this.setState({ favoritos:true });
+            this.setState({ favoritos:true }); //si esta en favs el boton va a decir "eliminar de favoritos"
         }
     }
 }
 
+//boton agregar
       agregarFavoritos(){
 
         let favoritos = []
@@ -30,10 +31,10 @@ class MoviesCard extends Component{
             let stringifiado = JSON.stringify(favoritos)
             localStorage.setItem("favoritosPelis", stringifiado)
         }else{
-            let parseado = JSON.parse(traido)
-            parseado.push(this.props.id)
-            let stringifiado = JSON.stringify(parseado)
-            localStorage.setItem("favoritosPelis", stringifiado)
+          let parseado = JSON.parse(traido)
+          parseado.push(this.props.id)
+          let stringifiado = JSON.stringify(parseado)
+          localStorage.setItem("favoritosPelis", stringifiado)
         }
 
         this.setState({
@@ -41,13 +42,16 @@ class MoviesCard extends Component{
         })
       }
 
-      quitarFavoritos(){
+    //boton borrar
+      borrarFavoritos(){
 
         let traido = localStorage.getItem("favoritosPelis")
-        let parseado = JSON.parse(traido)
-        let filtrado = parseado.filter(id => id !== this.props.id)
-        let stringifiado = JSON.stringify(filtrado)
-        localStorage.setItem("favoritosPelis", stringifiado)
+        if (traido !== null) {
+       let parseado = JSON.parse(traido);
+        let filtrado = parseado.filter(id => id !== this.props.id);
+        let stringifiado = JSON.stringify(filtrado);
+        localStorage.setItem("favoritosPelis", stringifiado);
+    }
 
 
         this.setState({
@@ -66,7 +70,7 @@ render(){
         <button>Ir a detalle</button>
       </Link>
 
-    {this.state.favoritos ? <button onClick={() => this.quitarFavoritos()}>Eliminar de favoritos</button> : 
+    {this.state.favoritos ? <button onClick={() => this.borrarFavoritos()}>Eliminar de favoritos</button> : 
       <button onClick={() => this.agregarFavoritos()}>Agregar a favoritos</button>}
 
     </article>

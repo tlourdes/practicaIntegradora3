@@ -18,6 +18,8 @@ constructor(props) {
         }
     }}
 
+    //boton agregar
+
     agregarFavoritos(){
         let favoritos = []
 
@@ -38,14 +40,17 @@ constructor(props) {
             favoritos:true
         })
     }
-      quitarFavoritos(){
+
+        //boton borrar
+    borrarFavoritos(){
 
         let traido = localStorage.getItem("favoritosSeries")
-        let parseado = JSON.parse(traido)
-        let filtrado = parseado.filter(id => id !== this.props.id)
-        let stringifiado = JSON.stringify(filtrado)
-        localStorage.setItem("favoritosSeries", stringifiado)
-
+       if (traido !== null) {
+      let parseado = JSON.parse(traido);
+      let filtrado = parseado.filter(id => id !== this.props.id);
+      let stringifiado = JSON.stringify(filtrado);
+      localStorage.setItem("favoritosSeries", stringifiado);
+    }
 
         this.setState({
             favoritos:false
@@ -63,7 +68,7 @@ constructor(props) {
         <button>Ir a detalle</button>
       </Link>
 
-         {this.state.favoritos ? <button onClick={() => this.quitarFavoritos()}>Eliminar de favoritos</button> : 
+         {this.state.favoritos ? <button onClick={() => this.borrarFavoritos()}>Eliminar de favoritos</button> : 
       <button onClick={() => this.agregarFavoritos()}>Agregar a favoritos</button>}
 
     </article>
