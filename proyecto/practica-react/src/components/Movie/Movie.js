@@ -1,6 +1,6 @@
 import React from 'react';
 
-function detalleP({ movie }) {
+function DetalleP({ movie }) {
     if (!movie) return <p>Cargando...</p>
   return (
     <div className='sectionDetalleP'>
@@ -21,4 +21,4 @@ function detalleP({ movie }) {
   );
 }
 
-export default detalleP;
+export default DetalleP;

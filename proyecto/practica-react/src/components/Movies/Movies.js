@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MoviesCard from "./MoviesCard";
+import MoviesCard from "../MoviesCard/MoviesCard";
 import { Link } from "react-router-dom";
 
 class Movies extends Component {
@@ -26,7 +26,8 @@ class Movies extends Component {
             <h3>Cargando...</h3>
           ) : (
             this.state.movies.map(function(movie, idx) {
-              return (
+              if (idx < 4){
+                return (
                 <MoviesCard
                   key={idx}
                   id={movie.id}
@@ -35,6 +36,8 @@ class Movies extends Component {
                   description={movie.overview}
                 />
               );
+              } else{return null;}
+              
             })
           )}
         </div>

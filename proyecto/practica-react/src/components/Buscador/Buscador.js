@@ -4,65 +4,54 @@ class Buscador extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: "",
-      tipo: "pelicula"
+      busqueda: "",
+      tipo: "movie", // valor inicial
     };
-
-    this.cambiarTexto = this.cambiarTexto.bind(this);
-    this.cambiarTipo = this.cambiarTipo.bind(this);
-    this.buscar = this.buscar.bind(this);
   }
 
   cambiarTexto(e) {
-    this.setState({ query: e.target.value });
+    this.setState({ busqueda: e.target.value });
   }
 
   cambiarTipo(e) {
     this.setState({ tipo: e.target.value });
   }
 
-  buscar(e) {
-    e.preventDefault();
-    console.log("Buscando:", this.state.query, "Tipo:", this.state.tipo);
-  }
-
   render() {
     return (
-      <form onSubmit={this.buscar} className="flex gap-2 mb-4">
-        <div className="flex gap-4">
+      <form action="/search-results" method="get">
+        <input
+          type="text"
+          name="query" 
+          value={this.state.busqueda}
+          onChange={(e) => this.cambiarTexto(e)}
+          placeholder="Buscar..."
+        />
+
+        <div>
           <label>
             <input
               type="radio"
-              name="tipo"
-              value="pelicula"
-              checked={this.state.tipo === "pelicula"}
-              onChange={this.cambiarTipo}
+              name="type" 
+              value="movie"
+              checked={this.state.tipo === "movie"}
+              onChange={(e) => this.cambiarTipo(e)}
             />
             Películas
           </label>
           <label>
             <input
               type="radio"
-              name="tipo"
-              value="serie"
-              checked={this.state.tipo === "serie"}
-              onChange={this.cambiarTipo}
+              name="type"
+              value="tv"
+              checked={this.state.tipo === "tv"}
+              onChange={(e) => this.cambiarTipo(e)}
             />
             Series
           </label>
         </div>
 
-        <input
-          type="text"
-          value={this.state.query}
-          onChange={this.cambiarTexto}
-          placeholder="Buscar..."
-          className="border p-2 flex-1 rounded"
-        />
-
-        <button type="submit" className="bg-blue-500 text-white px-4 rounded">
-          Buscar
-        </button>
+        <button type="submit">Buscar</button>
       </form>
     );
   }

@@ -1,21 +1,79 @@
-import React from "react";
+import React, {Component} from "react";
 import { Link } from "react-router-dom";
 
-function SeriesCard(props) {
+class SeriesCard extends Component{
+constructor(props) {
+        super(props);
+        this.state = {
+          favoritos:false
+        };
+      }
+
+        componentDidMount(){
+    let traido = localStorage.getItem("favoritosSeries");
+    if(traido !== null){
+        let parseado = JSON.parse(traido);
+        if(parseado.includes(this.props.id)){
+            this.setState({ favoritos:true });
+        }
+    }}
+
+    //boton agregar
+
+    agregarFavoritos(){
+        let favoritos = []
+
+        let traido = localStorage.getItem("favoritosSeries")
+
+        if (traido === null) {
+            favoritos.push(this.props.id)
+            let stringifiado = JSON.stringify(favoritos)
+            localStorage.setItem("favoritosSeries", stringifiado)
+        }else{
+            let parseado = JSON.parse(traido)
+            parseado.push(this.props.id)
+            let stringifiado = JSON.stringify(parseado)
+            localStorage.setItem("favoritosSeries", stringifiado)
+        }
+
+        this.setState({
+            favoritos:true
+        })
+    }
+
+        //boton borrar
+    borrarFavoritos(){
+
+        let traido = localStorage.getItem("favoritosSeries")
+       if (traido !== null) {
+      let parseado = JSON.parse(traido);
+      let filtrado = parseado.filter(id => id !== this.props.id);
+      let stringifiado = JSON.stringify(filtrado);
+      localStorage.setItem("favoritosSeries", stringifiado);
+    }
+
+        this.setState({
+            favoritos:false
+        })
+      }
+
+    render(){
   return (
     <article className="card">
-      <img src={"https://image.tmdb.org/t/p/w500" + props.image} alt={props.name} />
-      <h3>{props.name}</h3>
-      <p>{props.description}</p>
+      <img src={"https://image.tmdb.org/t/p/w500" + this.props.image} alt={this.props.name} />
+      <h3>{this.props.name}</h3>
+      <p>{this.props.description}</p>
 
-      <Link to={"/serie/" + props.id}>
+      <Link to={"/serie/" + this.props.id}>
         <button>Ir a detalle</button>
       </Link>
 
-      <button>Agregar a favoritos</button> {/* hacer para q se guarde en favoritos  */}
+         {this.state.favoritos ? <button onClick={() => this.borrarFavoritos()}>Eliminar de favoritos</button> : 
+      <button onClick={() => this.agregarFavoritos()}>Agregar a favoritos</button>}
+
     </article>
   );
 }
-
+};
 export default SeriesCard;
 
