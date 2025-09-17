@@ -43,7 +43,7 @@ class Movies extends Component {
         </div>
 
         <Link to="/ver-todas-peliculas">
-          <button>Ver todas</button>
+          <button class='botones'>Ver todas</button>
         </Link>
       </section>
     );

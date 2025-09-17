@@ -4,8 +4,10 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 function Navbar() {
   return (
     <nav>
-        <h1>Clicks</h1>
-        <img src="/img/logoClicks.png"></img> 
+        <div className="logo">
+        <img src="/img/logo.png"></img> 
+  </div>
+
       <ul className="main-nav">
         <li>
           <Link to="/" >
@@ -14,7 +16,7 @@ function Navbar() {
         </li>
         <li>
           <Link to="/Peliculas">
-            Pelicluas
+            Peliculas
           </Link>
         </li>
         <li>

@@ -63,14 +63,14 @@ constructor(props) {
       <img src={"https://image.tmdb.org/t/p/w500" + this.props.image} alt={this.props.name} />
       <h3>{this.props.name}</h3>
       <p>{this.props.description}</p>
-
+      <div className="card-buttons">
       <Link to={"/serie/" + this.props.id}>
         <button>Ir a detalle</button>
       </Link>
 
          {this.state.favoritos ? <button onClick={() => this.borrarFavoritos()}>Eliminar de favoritos</button> : 
       <button onClick={() => this.agregarFavoritos()}>Agregar a favoritos</button>}
-
+</div>
     </article>
   );
 }

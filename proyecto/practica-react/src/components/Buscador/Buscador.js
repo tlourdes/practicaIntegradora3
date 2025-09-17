@@ -19,7 +19,7 @@ class Buscador extends Component {
 
   render() {
     return (
-      <form action="/search-results" method="get">
+      <form action="/search-results" method="get" className="search">
         <input
           type="text"
           name="query" 
@@ -28,7 +28,7 @@ class Buscador extends Component {
           placeholder="Buscar..."
         />
 
-        <div>
+<div className="radios">
           <label>
             <input
               type="radio"
@@ -51,7 +51,7 @@ class Buscador extends Component {
           </label>
         </div>
 
-        <button type="submit">Buscar</button>
+        <button type="submit" class='botones'>Buscar</button>
       </form>
     );
   }

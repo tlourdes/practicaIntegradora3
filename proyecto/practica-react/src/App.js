@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 
-
+import './css/styles.css';
 // IMPORTS DE SCREENS
 import Home from './screens/Home/Home';
 import Favorites from './screens/Favorites/Favorites';
