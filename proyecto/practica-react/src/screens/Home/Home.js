@@ -7,13 +7,11 @@ import Buscador from "../../components/Buscador/Buscador";
 
 function Home() {
     return(<React.Fragment>
-        <Navbar />
         <Buscador />
         <main className="main">
             <Movies />
             <Series />
         </main>
-        <Footer />
     </React.Fragment>)
     
 }

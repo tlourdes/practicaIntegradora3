@@ -1,6 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
+// IMPORTS DE COMPONENTS
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 
 import './css/styles.css';
 // IMPORTS DE SCREENS
@@ -14,7 +17,7 @@ import Resultado from './screens/Results/Results';
 function App(){
   return(
     <>
-
+      <Navbar />
       <Switch>
         <Route path="/favoritos" exact={true} component={Favorites} />
         <Route path="/pelicula/:id" exact={true} component={DetalleP} />
@@ -22,6 +25,7 @@ function App(){
         <Route path="/" exact={true} component={Home} />
        
       </Switch>
+      <Footer />
 
     </>
   )

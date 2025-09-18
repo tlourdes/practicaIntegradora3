@@ -20,7 +20,7 @@ class Movies extends Component {
   render() {
     return (
       <section>
-        <h2>Películas en Cartel</h2>
+        <h2 class='titulos'>Películas en cartel</h2>
         <div className="card-container">
           {this.state.movies.length === 0 ? (
             <h3>Cargando...</h3>

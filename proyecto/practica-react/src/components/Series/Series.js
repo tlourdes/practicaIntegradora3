@@ -20,7 +20,7 @@ class Series extends Component {
   render() {
     return (
       <section>
-        <h2>Series Populares</h2>
+        <h2 class='titulos'>Series populares</h2>
         <div className="card-container">
           {this.state.series.length === 0 ? (
             <h3>Cargando...</h3>
