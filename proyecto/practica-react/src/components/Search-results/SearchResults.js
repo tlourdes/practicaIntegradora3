@@ -23,6 +23,15 @@ class ResultadosBusqueda extends Component {
     const busqueda = parametros.get("query");
     const tipo = parametros.get("type");
 
+    console.log("location.search:", this.props.location.search);
+    console.log("query:", busqueda, "type:", tipo);
+
+    if (!busqueda || !tipo) {
+      console.warn("Faltan parámetros de búsqueda");
+      this.setState({ resultados: [] });
+      return;
+    }
+
     const apiKey = "71f9dd51c9b661ac3cc8a99b148402c4"; 
 
     fetch(
@@ -56,10 +65,7 @@ class ResultadosBusqueda extends Component {
         <h2>Resultados de búsqueda</h2>
         <div className="grid-resultados">
           {resultados.map((item) => {
-            let titulo = item.title;
-            if (!titulo) {
-              titulo = item.name;
-            }
+            let titulo = item.title || item.name;
 
             return (
               <div key={item.id} className="card">
@@ -80,4 +86,3 @@ class ResultadosBusqueda extends Component {
 }
 
 export default ResultadosBusqueda;
-
