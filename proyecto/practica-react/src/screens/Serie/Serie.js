@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import DetalleS from "../../components/Serie/Serie";
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 class Detalle extends Component {
     constructor(props) {
@@ -26,14 +28,20 @@ class Detalle extends Component {
       render() {
         const  {serie, cargando}= this.state;
     
-        if (cargando) return <p>Cargando...</p>;
+        if (cargando) return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>;
     
  return (
+  <React.Fragment>
+     <Navbar />
             <div>
               <DetalleS serie={serie} />
      
             </div>
+          <Footer />
+
+    </React.Fragment>
           );
+          
         }
       }
 

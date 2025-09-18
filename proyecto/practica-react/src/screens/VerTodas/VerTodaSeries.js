@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SeriesCard from '../../components/SeriesCard/SeriesCard';
 import VerMas from '../../components/VerMas/VerMas';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 
 //DE ESTA FORMA CARGAN LAS PRIMERAS 20 PELICULAS/SERIES NO TODAS 
@@ -35,9 +37,11 @@ class VerTodasSeries extends Component {
   render() {
     const { series, MostrarMas, cargando } = this.state;
 
-    if (cargando) return <p>Cargando...</p>;
+    if (cargando) return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>;
 
     return (
+      <React.Fragment>
+      <Navbar />
       <section>
         <h2>Todas las series</h2>
         <div className="card-container">
@@ -61,6 +65,8 @@ class VerTodasSeries extends Component {
           <VerMas onClick={this.MostrarMasSeries} />
         )}
       </section>
+      <Footer />
+    </React.Fragment>
     );
   }
 }

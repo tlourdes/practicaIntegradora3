@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MoviesCard from '../../components/MoviesCard/MoviesCard';
 import VerMas from '../../components/VerMas/VerMas';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 class VerTodasPeliculas extends Component {
   constructor(props) {
@@ -33,9 +35,12 @@ class VerTodasPeliculas extends Component {
   render() {
     const { peliculas, MostrarMas, cargando } = this.state;
 
-    if (cargando) return <p>Cargando...</p>;
+    if (cargando) return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>;
 
     return (
+      <React.Fragment>
+        <Navbar />
+      
       <section>
         <h2>Todas las películas en cartelera</h2>
         <div className="card-container">
@@ -59,6 +64,8 @@ class VerTodasPeliculas extends Component {
           <VerMas onClick={this.MostrarMasPeliculas} />
         )}
       </section>
+      <Footer />
+      </React.Fragment>
     );
   }
 }

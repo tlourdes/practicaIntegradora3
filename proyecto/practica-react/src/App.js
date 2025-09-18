@@ -17,7 +17,7 @@ import VerTodasSeries from "./screens/VerTodas/VerTodaSeries";
 function App(){
   return(
     <>
-      <Navbar />
+      
       <Switch>
         <Route path="/favoritos" exact={true} component={Favorites} />
         <Route path="/pelicula/:id" exact={true} component={DetalleP} />
@@ -28,7 +28,7 @@ function App(){
         
        
       </Switch>
-      <Footer />
+     
 
     </>
   )

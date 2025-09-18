@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import DetalleP from "../../components/Movie/Movie";
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 class Detalle extends Component {
     constructor(props) {
@@ -24,13 +26,19 @@ class Detalle extends Component {
       render() {
         const  {movie, cargando}= this.state;
     
-        if (cargando) return <p>Cargando...</p>;
+         if (cargando) return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>;
     
  return (
+  <React.Fragment>
+     <Navbar />
             <div>
               <DetalleP movie={movie} />
      
             </div>
+          <Footer />
+
+    </React.Fragment>
+            
           );
         }
       }

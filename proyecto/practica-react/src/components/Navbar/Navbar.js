@@ -15,17 +15,17 @@ function Navbar() {
           </Link>
         </li>
         <li>
-          <Link to="/Peliculas">
+          <Link to="/VerTodasPeliculas">
             Peliculas
           </Link>
         </li>
         <li>
-          <Link to="/personajes">
+          <Link to="/VerTodasSeries">
             Series
           </Link>
         </li>
         <li>
-          <Link to="/Favoritas">
+          <Link to="/favoritos">
             Favoritas
           </Link>
         </li>
