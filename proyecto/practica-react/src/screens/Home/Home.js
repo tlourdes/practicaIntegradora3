@@ -4,6 +4,8 @@ import Movies from "../../components/Movies/Movies";
 import Series from "../../components/Series/Series";
 import Footer from "../../components/Footer/Footer";
 import Buscador from "../../components/Buscador/Buscador";
+import SeriesTrending from "../../components/SeriesTrending/SeriesTrending";
+import MoviesTrending from "../../components/MoviesTrending/MoviesTrending";
 
 function Home() {
     return(<React.Fragment>
@@ -11,7 +13,9 @@ function Home() {
         <Buscador />
         <main className="main">
             <Movies />
+            <MoviesTrending />
             <Series />
+            <SeriesTrending />
         </main>
         <Footer/>
     </React.Fragment>)
