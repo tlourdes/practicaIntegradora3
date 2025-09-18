@@ -9,7 +9,7 @@ class DetalleS extends Component {
   }
 
   componentDidMount() {
-    const { serie } = this.props;
+    const serie = this.props.serie;
     if (serie) {
       let traido = localStorage.getItem("favoritosSeries");
       if (traido !== null) {
@@ -22,7 +22,7 @@ class DetalleS extends Component {
   }
 
   agregarFavoritos() {
-    const { serie } = this.props;
+    const  serie  = this.props.serie;
     let favoritos = [];
     let traido = localStorage.getItem("favoritosSeries");
 
@@ -40,7 +40,7 @@ class DetalleS extends Component {
   }
 
   borrarFavoritos() {
-    const { serie } = this.props;
+    const  serie  = this.props.serie;
     let traido = localStorage.getItem("favoritosSeries");
 
     if (traido !== null) {
@@ -53,11 +53,14 @@ class DetalleS extends Component {
   }
 
   render() {
-    const { serie } = this.props;
+    const  serie  = this.props.serie;
 
-    if (!serie) return <p>Cargando...</p>;
+  
 
     return (
+       !serie ? (
+      <h3>Cargando...</h3> 
+    ) : (
       <div className='sectionDetalle'>
         <div>
           <h2>{serie.title}</h2>
@@ -89,6 +92,7 @@ class DetalleS extends Component {
           </div>
         </div>
       </div>
+    )
     );
   }
 }

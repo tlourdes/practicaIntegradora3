@@ -9,7 +9,7 @@ class DetalleP extends Component {
   }
 
   componentDidMount() {
-    const { movie } = this.props;
+    const movie = this.props.movie;
     if (movie) {
       let traido = localStorage.getItem("favoritosMovies");
       if (traido !== null) {
@@ -22,7 +22,7 @@ class DetalleP extends Component {
   }
 
   agregarFavoritos() {
-    const { movie } = this.props;
+    const  movie  = this.props.movie;
     let favoritos = [];
     let traido = localStorage.getItem("favoritosMovies");
 
@@ -40,7 +40,7 @@ class DetalleP extends Component {
   }
 
   borrarFavoritos() {
-    const { movie } = this.props;
+    const  movie  = this.props.movie;
     let traido = localStorage.getItem("favoritosMovies");
 
     if (traido !== null) {
@@ -53,11 +53,14 @@ class DetalleP extends Component {
   }
 
   render() {
-    const { movie } = this.props;
+    const movie = this.props.movie;
 
-    if (!movie) return <p>Cargando...</p>;
+    
 
     return (
+       !movie ? (
+      <h3>Cargando...</h3> 
+    ) : (
       <div className='sectionDetalle'>
         <div>
           <h2>{movie.title}</h2>
@@ -89,6 +92,7 @@ class DetalleP extends Component {
           </div>
         </div>
       </div>
+    )
     );
   }
 }
