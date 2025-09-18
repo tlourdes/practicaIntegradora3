@@ -1,5 +1,4 @@
 import React from 'react';
-
 function DetalleP({ movie }) {
     if (!movie) return <p>Cargando...</p>
   return (
@@ -16,6 +15,7 @@ function DetalleP({ movie }) {
         <p>Duración: {movie.runtime} minutos</p>
         <p>Sinopsis: {movie.overview}</p>
         <p>Género: {movie.genres ? movie.genres.map(genre => genre.name).join(', ') : 'No disponible'}</p> 
+        
         <button class='botones'>Agregar a favoritos</button>
         </div>
     </div>
@@ -24,3 +24,4 @@ function DetalleP({ movie }) {
 }
 
 export default DetalleP;
+//

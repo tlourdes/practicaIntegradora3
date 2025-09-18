@@ -43,9 +43,9 @@ class Series extends Component {
           )}
         </div>
 
-        <Link to="/ver-todas-series">
-          <button class='botones'>Ver todas</button>
-        </Link>
+        <Link to="/VerTodasSeries">
+  <button className='botones'>Ver todas</button>
+</Link>
       </section>
     );
   }
