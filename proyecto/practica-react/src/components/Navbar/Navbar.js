@@ -15,13 +15,23 @@ function Navbar() {
           </Link>
         </li>
         <li>
-          <Link to="/VerTodasPeliculas">
-            Peliculas
+          <Link to="/PeliculasCartel">
+            Peliculas en cartel
           </Link>
         </li>
         <li>
-          <Link to="/VerTodasSeries">
-            Series
+          <Link to="/PeliculasTrending">
+            Peliculas trending
+          </Link>
+        </li>
+        <li>
+          <Link to="/SeriesPopulares">
+            Series populares
+          </Link>
+        </li>
+         <li>
+          <Link to="/SeriesTrending">
+            Series trending
           </Link>
         </li>
         <li>

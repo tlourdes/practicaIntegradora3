@@ -7,7 +7,7 @@ function Error() {
    return (
       <React.Fragment>
          <Menu />
-         <h1>Error</h1>
+         <h1>404 Contenido Inexistente</h1>
          <Footer/>
       </React.Fragment>
    )
