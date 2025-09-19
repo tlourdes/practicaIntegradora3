@@ -5,7 +5,9 @@ class MoviesCard extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          favoritos:false
+          favoritos:false,
+            verDescripcion: false,      
+          textoBoton: "Ver descripción"
         };
       }
 
@@ -59,12 +61,27 @@ class MoviesCard extends Component{
         })
       }
 
+      verDescripcion() {
+    if (this.state.verDescripcion) {
+      this.setState({
+        verDescripcion: false,
+        textoBoton: "Ver descripción"
+      });
+    } else {
+      this.setState({
+        verDescripcion: true,
+        textoBoton: "Ocultar descripción"
+      });
+    }
+  }
 render(){
   return (
     <article className="card">
       <img src={"https://image.tmdb.org/t/p/w500" + this.props.image} alt={this.props.name} />
       <h3>{this.props.name}</h3>
-      <p>{this.props.description}</p>
+       <button className="botonDescripción" onClick={() => this.verDescripcion()}>{this.state.textoBoton}</button>
+
+      {this.state.verDescripcion && <p>{this.props.description}</p>}
 
       <div className="card-buttons">
       <Link to={"/pelicula/" + this.props.id}>

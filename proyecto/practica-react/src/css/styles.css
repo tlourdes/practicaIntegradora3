@@ -94,6 +94,23 @@ background-color: #f0f0f0;
     background-color: #1a373e;
   }
   
+  .card .botonDescripción {
+    background-color: transparent;  
+    color: inherit;                
+    border: none;                  
+    padding: 0;  
+    font-size: 15px; 
+     
+    text-decoration: underline;     
+    display: block;   
+    margin: 10px auto;   
+    text-align: center; 
+}
+
+.card .botonDescripción:hover {
+    background-color: transparent; 
+   
+}
   /* seccion pelicula y series */
 section {
     padding: 30px;
@@ -316,7 +333,6 @@ section {
 }
 
 
-  
-  
+
 
 
