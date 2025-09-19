@@ -44,7 +44,7 @@ class SeriesTrending extends Component {
           )}
         </div>
 
-        <Link to="/VerTodasSeries">
+        <Link to="/SeriesTrending">
   <button className='botones'>Ver todas</button>
 </Link>
       </section>

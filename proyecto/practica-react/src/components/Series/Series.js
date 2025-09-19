@@ -43,7 +43,7 @@ class Series extends Component {
           )}
         </div>
 
-        <Link to="/VerTodasSeries">
+        <Link to="/SeriesPopulares">
   <button className='botones'>Ver todas</button>
 </Link>
       </section>
