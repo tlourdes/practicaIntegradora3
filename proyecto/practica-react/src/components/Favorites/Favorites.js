@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Favorites extends Component {
   constructor(props) {
@@ -105,6 +106,9 @@ class Favorites extends Component {
                 <img src={"https://image.tmdb.org/t/p/w500" + pelicula.poster_path} alt={pelicula.title} />
                 <h3>{pelicula.title}</h3>
                 <p>{pelicula.overview}</p>
+                <Link to={"/pelicula/" + pelicula.id}>
+                  <button>Ir a detalle</button>
+                </Link>
                 <button onClick={() => this.removeMovie(pelicula.id)}>Eliminar de favoritos</button>
               </div>
             ))
@@ -119,6 +123,9 @@ class Favorites extends Component {
                 <img src={"https://image.tmdb.org/t/p/w500" + serie.poster_path} alt={serie.name} />
                 <h3>{serie.name}</h3>
                 <p>{serie.overview}</p>
+                <Link to={"/serie/" + serie.id}>
+        <button>Ir a detalle</button>
+      </Link>
                 <button onClick={() => this.removeSerie(serie.id)}>Eliminar de favoritos</button>
               </div>
             ))
