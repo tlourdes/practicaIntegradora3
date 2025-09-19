@@ -74,11 +74,22 @@ class DetalleS extends Component {
             <p>Fecha de estreno: {serie.first_air_date}</p>
             <p>Duración: {serie.episode_run_time} minutos</p>
             <p>Sinopsis: {serie.overview}</p>
-            <p>
-              Género: {serie.genres && serie.genres.length > 0 
-                ? serie.genres.map(g => g.name).toString() 
-                : "No disponible"}
-            </p>
+            <p>Género: {
+    serie.genres && serie.genres.length > 0
+      ? (() => {
+          let Generos = "";
+          for (let i = 0; i < serie.genres.length; i++) {
+            Generos += serie.genres[i].name;
+            if (i < serie.genres.length - 1) {
+              Generos += ", ";
+            }
+          }
+          return Generos;
+        })()
+      : "No disponible"
+  }
+</p>
+
 
             {this.state.favorito ? (
               <button className="botones" onClick={() => this.borrarFavoritos()}>

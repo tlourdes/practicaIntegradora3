@@ -74,11 +74,22 @@ class DetalleP extends Component {
             <p>Fecha de estreno: {movie.release_date}</p>
             <p>Duración: {movie.runtime} minutos</p>
             <p>Sinopsis: {movie.overview}</p>
-            <p>
-              Género: {movie.genres && movie.genres.length > 0
-                ? movie.genres.map(g => g.name).toString()
-                : "No disponible"}
-            </p>
+             <p>Género: {
+    movie.genres && movie.genres.length > 0
+      ? (() => {
+          let Generos = "";
+          for (let i = 0; i < movie.genres.length; i++) {
+            Generos += movie.genres[i].name;
+            if (i < movie.genres.length - 1) {
+              Generos += ", ";
+            }
+          }
+          return Generos;
+        })()
+      : "No disponible"
+  }
+</p>
+
 
             {this.state.favorito ? (
               <button className="botones" onClick={() => this.borrarFavoritos()}>
