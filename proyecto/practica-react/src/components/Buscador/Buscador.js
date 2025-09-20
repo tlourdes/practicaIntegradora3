@@ -19,7 +19,7 @@ class Buscador extends Component {
 
   render() {
     return (
-      <form action="/search-results" method="get" className="search">
+      <form action="/ResultadosBusqueda" method="get" className="search">
         <input
           type="text"
           name="query" 
