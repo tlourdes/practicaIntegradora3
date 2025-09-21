@@ -15,11 +15,19 @@ class MoviesCard extends Component{
     let traido = localStorage.getItem("favoritosPelis");
     if(traido !== null){
         let parseado = JSON.parse(traido);
-        if(parseado.includes(this.props.id)){
-            this.setState({ favoritos:true }); //si esta en favs el boton va a decir "eliminar de favoritos"
+        let encontrado = false;
+        for (let i = 0; i < parseado.length; i++) {
+            if (parseado[i] === this.props.id) {
+                encontrado = true;
+                
+            }
+        }
+        if (encontrado) {
+            this.setState({ favoritos: true });  //si esta en favs el boton va a decir "eliminar de favoritos"
         }
     }
 }
+ 
 
 //boton agregar
       agregarFavoritos(){
@@ -75,13 +83,17 @@ class MoviesCard extends Component{
     }
   }
 render(){
+  let descripcion ="";
+  if (this.state.verDescripcion) {
+     descripcion = <p>{this.props.description}</p>;
+  }
   return (
     <article className="card">
       <img src={"https://image.tmdb.org/t/p/w500" + this.props.image} alt={this.props.name} />
       <h3>{this.props.name}</h3>
-       <button className="botonDescripción" onClick={() => this.verDescripcion()}>{this.state.textoBoton}</button>
+       <button className="botonDescripción" onClick={() => this.verDescripcion()}> {this.state.textoBoton}</button>
 
-      {this.state.verDescripcion && <p>{this.props.description}</p>}
+      {descripcion}
 
       <div className="card-buttons">
       <Link to={"/pelicula/" + this.props.id}>

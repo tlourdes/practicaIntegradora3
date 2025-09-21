@@ -9,12 +9,19 @@ class DetalleP extends Component {
   }
 
   componentDidMount() {
-    const movie = this.props.movie;
+    let movie = this.props.movie;
     if (movie) {
       let traido = localStorage.getItem("favoritosMovies");
       if (traido !== null) {
         let parseado = JSON.parse(traido);
-        if (parseado.includes(movie.id)) {
+        let encontrado = false;
+        for (let i = 0; i < parseado.length; i++) {
+          if (parseado[i] === movie.id) {
+            encontrado = true;
+            
+          }
+        }
+        if (encontrado) {
           this.setState({ favorito: true });
         }
       }
@@ -22,7 +29,7 @@ class DetalleP extends Component {
   }
 
   agregarFavoritos() {
-    const  movie  = this.props.movie;
+    let  movie  = this.props.movie;
     let favoritos = [];
     let traido = localStorage.getItem("favoritosMovies");
 
@@ -31,7 +38,14 @@ class DetalleP extends Component {
       localStorage.setItem("favoritosMovies", JSON.stringify(favoritos));
     } else {
       let parseado = JSON.parse(traido);
-      if (!parseado.includes(movie.id)) {
+      let yaExiste = false;
+      for (let i = 0; i < parseado.length; i++) {
+        if (parseado[i] === movie.id) {
+          yaExiste = true;
+  
+        }
+      }
+      if (yaExiste!== null) {  
         parseado.push(movie.id);
         localStorage.setItem("favoritosMovies", JSON.stringify(parseado));
       }
@@ -40,7 +54,7 @@ class DetalleP extends Component {
   }
 
   borrarFavoritos() {
-    const  movie  = this.props.movie;
+    let  movie  = this.props.movie;
     let traido = localStorage.getItem("favoritosMovies");
 
     if (traido !== null) {
@@ -53,12 +67,23 @@ class DetalleP extends Component {
   }
 
   render() {
-    const movie = this.props.movie;
+    let movie = this.props.movie;
+    let generos ="No disponible";
+
+    if (movie.genres && movie.genres.length > 0) { // si tiene genero y hay mas de uno
+      generos = "";
+      for (let i = 0; i < movie.genres.length; i++) {
+        generos += movie.genres[i].name;
+        if (i < movie.genres.length - 1) { // si no es el ultimo le pongo coma
+          generos += ", ";
+        }
+      }
+    }
 
     
 
     return (
-       !movie ? (
+       movie=== null || movie=== undefined ? ( // esto (||) lo vimos o no? xq sino puedo hacer !movie pero no se si lo vimos
       <h3>Cargando...</h3> 
     ) : (
       <div className='sectionDetalle'>
@@ -74,24 +99,10 @@ class DetalleP extends Component {
             <p>Fecha de estreno: {movie.release_date}</p>
             <p>Duración: {movie.runtime} minutos</p>
             <p>Sinopsis: {movie.overview}</p>
-             <p>Género: {
-    movie.genres && movie.genres.length > 0
-      ? (() => {
-          let Generos = "";
-          for (let i = 0; i < movie.genres.length; i++) {
-            Generos += movie.genres[i].name;
-            if (i < movie.genres.length - 1) {
-              Generos += ", ";
-            }
-          }
-          return Generos;
-        })()
-      : "No disponible"
-  }
-</p>
+             <p>Género: {generos}</p>
 
 
-            {this.state.favorito ? (
+            {this.state.favorito ? ( //esto esta bien ponerlo asi?
               <button className="botones" onClick={() => this.borrarFavoritos()}>
                 Eliminar de favoritos
               </button>

@@ -14,20 +14,23 @@ class Detalle extends Component {
     }
 
     componentDidMount() {
-        const  {id}  = this.props.match.params;
+        const id  = this.props.match.params.id;
         
         fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=2e0ef69342c52cb11393cc8472403ddb`)
           .then(res => res.json())
           .then(data => {
-            this.setState({ movie: data, cargando: false });
+            this.setState({ movie: data, 
+              cargando: false });
           });
       }
 
       render() {
-        const  {movie, cargando}= this.state;
-    
-         if (cargando) return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>;
-    
+       const movie = this.state.movie;
+        const cargando = this.state.cargando;
+
+
+         if (cargando) {return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>; }
+
  return (
   <React.Fragment>
      <Navbar />

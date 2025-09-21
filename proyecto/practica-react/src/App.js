@@ -28,7 +28,7 @@ function App() {
         <Route path="/SeriesPopulares" exact={true} component={VerTodasSeriesPopulares} />
         <Route path="/PeliculasCartel" exact={true} component={PelisCartel} />
         <Route path="/PeliculasTrending" exact={true} component={PelisTrending} />
-        <Route path="/ResultadosBusqueda" component={Results} />
+        <Route path="/ResultadosBusqueda" exact={true}component={Results} />
         <Route path="*" component={Error} />
       </Switch>
     </>

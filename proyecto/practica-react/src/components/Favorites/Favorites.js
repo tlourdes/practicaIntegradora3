@@ -29,7 +29,8 @@ class Favorites extends Component {
           .then(res => res.json())
           .then(data => {
             peliculas.push(data);
-            this.setState({ peliculas });
+            let nuevasPeliculas = peliculas
+            this.setState({ peliculas: nuevasPeliculas });
 
             
             fetchPendientes--;
@@ -37,10 +38,12 @@ class Favorites extends Component {
               this.setState({ cargando: false });
             }
           })
-          .catch(err => {
-            console.error(err);
+          .catch(e => {
+            console.error(e);
             fetchPendientes--;
-            if (fetchPendientes === 0) this.setState({ cargando: false });
+            if (fetchPendientes === 0) {
+              this.setState({ cargando: false });
+            }
           });
       }
     }
@@ -56,15 +59,20 @@ class Favorites extends Component {
           .then(res => res.json())
           .then(data => {
             series.push(data);
-            this.setState({ series });
+            let nuevasSeries = series;
+            this.setState({ series: nuevasSeries });
 
             fetchPendientes--;
-            if (fetchPendientes === 0) this.setState({ cargando: false });
+            if (fetchPendientes === 0) {
+              this.setState({ cargando: false });
+            }
           })
-          .catch(err => {
-            console.error(err);
+          .catch(e => {
+            console.error(e);
             fetchPendientes--;
-            if (fetchPendientes === 0) this.setState({ cargando: false });
+            if (fetchPendientes === 0) {
+              this.setState({ cargando: false });
+            }
           });
       }
     }
@@ -76,19 +84,30 @@ class Favorites extends Component {
   }
 
   // para que si borro un favorito deje de aparecer en la pagina
-    removeMovie = (id) => {
-    let favMovies = JSON.parse(localStorage.getItem("favoritosPelis"));
-     let actualizado = favMovies.filter(movieId => movieId !== id);
-    localStorage.setItem("favoritosPelis", JSON.stringify(actualizado));
-    this.setState({ peliculas: this.state.peliculas.filter(p => p.id !== id) });
-       }
 
-  removeSerie = (id) => {
+    removeMovie = (id) => { // si lo escribo como function o si le pongo un let antes no anda el this.setState PREGUNTAR Q HACER !!
+    let favMovies = JSON.parse(localStorage.getItem("favoritosPelis"));
+     let actualizado = favMovies.filter(function(movieId) {
+      return movieId !== id;
+    });
+    localStorage.setItem("favoritosPelis", JSON.stringify(actualizado));
+    let nuevasPeliculas = this.state.peliculas.filter(function(peli) {
+      return peli.id !== id;
+    });
+    this.setState({ peliculas: nuevasPeliculas });
+  }
+
+  removeSerie = (id) => { // si lo escribo como function o si le pongo un let antesno anda el this.setState PREGUNTAR Q HACER !!
       let favSeries = JSON.parse(localStorage.getItem("favoritosSeries"));
-      let actualizado = favSeries.filter(serieId => serieId !== id);
+      let actualizado = favSeries.filter(function(serieId) {
+      return serieId !== id;
+    });
     localStorage.setItem("favoritosSeries", JSON.stringify(actualizado));
-    this.setState({ series: this.state.series.filter(s => s.id !== id) });
-    }
+    let nuevasSeries = this.state.series.filter(function(serie) {
+      return serie.id !== id;
+    });
+    this.setState({ series: nuevasSeries });
+  }
 
   render() {
     if (this.state.cargando) {
@@ -107,8 +126,8 @@ class Favorites extends Component {
                 <h3>{pelicula.title}</h3>
                 <p>{pelicula.overview}</p>
                 <Link to={"/pelicula/" + pelicula.id}>
-                  <button>Ir a detalle</button>
-                </Link>
+        <button>Ir a detalle</button>
+      </Link>
                 <button onClick={() => this.removeMovie(pelicula.id)}>Eliminar de favoritos</button>
               </div>
             ))

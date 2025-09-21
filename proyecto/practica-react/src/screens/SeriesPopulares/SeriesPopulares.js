@@ -1,26 +1,3 @@
-/* import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
-
-import Footer from "../../components/Footer/Footer";
-
-import Series from "../../components/Series/Series";
-
-
-function SeriesPopulares() {
-    return(<React.Fragment>
-        <Navbar />
-
-        <main className="main">
-           
-            <Series />
-        </main>
-        <Footer/>
-    </React.Fragment>)
-    
-}
-
-export default SeriesPopulares; */
-
 import React, { Component } from 'react';
 import SeriesCard from '../../components/SeriesCard/SeriesCard';
 import VerMas from '../../components/VerMas/VerMas';
@@ -43,7 +20,8 @@ class VerTodasSeriesPopulares extends Component {
     fetch('https://api.themoviedb.org/3/tv/on_the_air?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=1')
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ series: data.results, cargando: false });
+        this.setState({ series: data.results, 
+          cargando: false });
       })
       .catch((error) => {
         console.error('Error al obtener las series:', error);
@@ -51,16 +29,24 @@ class VerTodasSeriesPopulares extends Component {
       });
   }
 
-  MostrarMasSeries = () => {
-    this.setState((prevState) => ({
-      MostrarMas: prevState.MostrarMas + 4,
+  MostrarMasSeries = () => { // aca nose si le tendria q poner un let pero si le pongo un let no m funciona el this.
+    this.setState((a) => ({
+      MostrarMas: a.MostrarMas + 4,
     }));
   };
 
   render() {
-    const { series, MostrarMas, cargando } = this.state;
+    const series = this.state.series;
+    const MostrarMas = this.state.MostrarMas;
+    const cargando = this.state.cargando;
 
-    if (cargando) return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>;
+    if (cargando) {return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>};
+
+
+    let botonVerMas = "";
+  if (MostrarMas < series.length) {
+    botonVerMas = <VerMas onClick={this.MostrarMasSeries} />;
+  } // solo aparece el boton si hay mas para mostrar
 
     return (
       <React.Fragment>
@@ -84,9 +70,7 @@ class VerTodasSeriesPopulares extends Component {
           })}
         </div>
 
-        {MostrarMas < series.length && (
-          <VerMas onClick={this.MostrarMasSeries} />
-        )}
+      {botonVerMas}
       </section>
       <Footer />
     </React.Fragment>

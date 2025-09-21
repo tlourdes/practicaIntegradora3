@@ -9,12 +9,19 @@ class DetalleS extends Component {
   }
 
   componentDidMount() {
-    const serie = this.props.serie;
+    let serie = this.props.serie;
     if (serie) {
       let traido = localStorage.getItem("favoritosSeries");
       if (traido !== null) {
         let parseado = JSON.parse(traido);
-        if (parseado.includes(serie.id)) {
+        let encontrado = false;
+        for (let i = 0; i < parseado.length; i++) {
+          if (parseado[i] === serie.id) {
+            encontrado = true;
+            
+          }
+        }
+        if (encontrado) {
           this.setState({ favorito: true });
         }
       }
@@ -22,7 +29,7 @@ class DetalleS extends Component {
   }
 
   agregarFavoritos() {
-    const  serie  = this.props.serie;
+    let  serie  = this.props.serie;
     let favoritos = [];
     let traido = localStorage.getItem("favoritosSeries");
 
@@ -31,7 +38,14 @@ class DetalleS extends Component {
       localStorage.setItem("favoritosSeries", JSON.stringify(favoritos));
     } else {
       let parseado = JSON.parse(traido);
-      if (!parseado.includes(serie.id)) {
+      let yaExiste = false;
+      for (let i = 0; i < parseado.length; i++) {
+        if (parseado[i] === serie.id) {
+          yaExiste = true;
+  
+        }
+      }
+      if (yaExiste!== null) {  
         parseado.push(serie.id);
         localStorage.setItem("favoritosSeries", JSON.stringify(parseado));
       }
@@ -40,7 +54,7 @@ class DetalleS extends Component {
   }
 
   borrarFavoritos() {
-    const  serie  = this.props.serie;
+    let serie  = this.props.serie;
     let traido = localStorage.getItem("favoritosSeries");
 
     if (traido !== null) {
@@ -53,12 +67,21 @@ class DetalleS extends Component {
   }
 
   render() {
-    const  serie  = this.props.serie;
-
+    let  serie  = this.props.serie;
+     let generos ="No disponible";
+ if (serie.genres && serie.genres.length > 0) { // si tiene genero y hay mas de uno
+      generos = "";
+      for (let i = 0; i < serie.genres.length; i++) {
+        generos += serie.genres[i].name;
+        if (i < serie.genres.length - 1) { // si no es el ultimo le pongo coma
+          generos += ", ";
+        }
+      }
+    }
   
 
     return (
-       !serie ? (
+        serie=== null || serie=== undefined ? ( // esto (||) lo vimos o no? xq sino puedo hacer !serie pero no se si lo vimos
       <h3>Cargando...</h3> 
     ) : (
       <div className='sectionDetalle'>
@@ -74,21 +97,7 @@ class DetalleS extends Component {
             <p>Fecha de estreno: {serie.first_air_date}</p>
             <p>Duración: {serie.episode_run_time} minutos</p>
             <p>Sinopsis: {serie.overview}</p>
-            <p>Género: {
-    serie.genres && serie.genres.length > 0
-      ? (() => {
-          let Generos = "";
-          for (let i = 0; i < serie.genres.length; i++) {
-            Generos += serie.genres[i].name;
-            if (i < serie.genres.length - 1) {
-              Generos += ", ";
-            }
-          }
-          return Generos;
-        })()
-      : "No disponible"
-  }
-</p>
+            <p>Género: {generos}</p>
 
 
             {this.state.favorito ? (

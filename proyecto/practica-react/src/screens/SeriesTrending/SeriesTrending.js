@@ -1,28 +1,3 @@
-/* import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
-
-import Footer from "../../components/Footer/Footer";
-
-import SeriesTrending from "../../components/SeriesTrending/SeriesTrending";
-
-
-function SeriesTrend() {
-    return(<React.Fragment>
-        <Navbar />
-
-        <main className="main">
-           
-            <SeriesTrending />
-        </main>
-        <Footer/>
-    </React.Fragment>)
-    
-}
-
-export default SeriesTrend; */
-
-
-
 import React, { Component } from 'react';
 import SeriesCard from '../../components/SeriesCard/SeriesCard';
 import VerMas from '../../components/VerMas/VerMas';
@@ -53,16 +28,23 @@ class VerTodasSeriesTrending extends Component {
       });
   }
 
-  MostrarMasSeries = () => {
-    this.setState((prevState) => ({
-      MostrarMas: prevState.MostrarMas + 4,
+  MostrarMasSeries = () => { // aca nose si le tendria q poner un let pero si le pongo un let no m funciona el this.
+    this.setState((a) => ({
+      MostrarMas: a.MostrarMas + 4,
     }));
   };
 
   render() {
-    const { series, MostrarMas, cargando } = this.state;
+    const series = this.state.series;
+    const MostrarMas = this.state.MostrarMas;
+    const cargando = this.state.cargando;
 
-    if (cargando) return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>;
+    if (cargando) {return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>};
+
+    let botonVerMas = "";
+  if (MostrarMas < series.length) {
+    botonVerMas = <VerMas onClick={this.MostrarMasSeries} />;
+  } // solo aparece el boton si hay mas para mostrar
 
     return (
       <React.Fragment>
@@ -86,9 +68,7 @@ class VerTodasSeriesTrending extends Component {
           })}
         </div>
 
-        {MostrarMas < series.length && (
-          <VerMas onClick={this.MostrarMasSeries} />
-        )}
+        {botonVerMas}
       </section>
       <Footer />
     </React.Fragment>
