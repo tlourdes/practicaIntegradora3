@@ -5,7 +5,7 @@ import MoviesCard from '../../components/MoviesCard/MoviesCard';
 import VerMas from '../../components/VerMas/VerMas';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
-import FilterMovie from '../../components/Filter/Filter';
+import FilterMovie from '../../components/FilterMovie/FilterMovie';
 
 class VerTodasPeliculasCartel extends Component {
   constructor(props) {

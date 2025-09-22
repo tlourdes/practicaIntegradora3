@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MoviesCard from '../../components/MoviesCard/MoviesCard';
 
 class FilterMovie extends Component {
   constructor(props) {
@@ -16,8 +17,8 @@ class FilterMovie extends Component {
     const { peliculas } = this.props;
     const { busqueda } = this.state;
 
-    const resultados = peliculas.filter((pelicula) =>
-      pelicula.title.toLowerCase().includes(busqueda.toLowerCase())
+    const resultados = peliculas.filter(p =>
+      p.title.toLowerCase().includes(busqueda.toLowerCase())
     );
 
     return (
@@ -28,14 +29,21 @@ class FilterMovie extends Component {
           value={busqueda}
           onChange={this.cambiarBusqueda}
         />
-        <ul>
+        <div className="card-container">
           {resultados.map((pelicula) => (
-            <li key={pelicula.id}>{pelicula.title}</li>
+            <MoviesCard
+              key={pelicula.id}
+              id={pelicula.id}
+              image={pelicula.poster_path}
+              name={pelicula.title}
+              description={pelicula.overview}
+            />
           ))}
-        </ul>
+        </div>
       </div>
     );
   }
 }
 
 export default FilterMovie;
+
