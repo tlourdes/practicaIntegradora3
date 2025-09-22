@@ -11,8 +11,10 @@ class DetalleP extends Component {
   componentDidMount() {
     let movie = this.props.movie;
     if (movie) {
-      let traido = localStorage.getItem("favoritosMovies");
+      let traido = localStorage.getItem("favoritosPelis");
       if (traido !== null) {
+        console.log("entre al if");
+        
         let parseado = JSON.parse(traido);
         let encontrado = false;
         for (let i = 0; i < parseado.length; i++) {
@@ -31,11 +33,11 @@ class DetalleP extends Component {
   agregarFavoritos() {
     let  movie  = this.props.movie;
     let favoritos = [];
-    let traido = localStorage.getItem("favoritosMovies");
+    let traido = localStorage.getItem("favoritosPelis");
 
     if (traido === null) {
       favoritos.push(movie.id);
-      localStorage.setItem("favoritosMovies", JSON.stringify(favoritos));
+      localStorage.setItem("favoritosPelis", JSON.stringify(favoritos));
     } else {
       let parseado = JSON.parse(traido);
       let yaExiste = false;
@@ -47,7 +49,7 @@ class DetalleP extends Component {
       }
       if (yaExiste!== null) {  
         parseado.push(movie.id);
-        localStorage.setItem("favoritosMovies", JSON.stringify(parseado));
+        localStorage.setItem("favoritosPelis", JSON.stringify(parseado));
       }
     }
     this.setState({ favorito: true });
@@ -55,12 +57,12 @@ class DetalleP extends Component {
 
   borrarFavoritos() {
     let  movie  = this.props.movie;
-    let traido = localStorage.getItem("favoritosMovies");
+    let traido = localStorage.getItem("favoritosPelis");
 
     if (traido !== null) {
       let parseado = JSON.parse(traido);
       let filtrado = parseado.filter(id => id !== movie.id);
-      localStorage.setItem("favoritosMovies", JSON.stringify(filtrado));
+      localStorage.setItem("favoritosPelis", JSON.stringify(filtrado));
     }
 
     this.setState({ favorito: false });
