@@ -123,10 +123,10 @@ class Favorites extends Component {
     return (
       <React.Fragment>
         <h2>Películas favoritas</h2>
-        <div className="favoritos-container">
+        <div className="card-container">
           {this.state.peliculas.length === 0 ? <p>No hay películas en favoritos.</p> :
             this.state.peliculas.map((pelicula) => (
-              <div key={pelicula.id} className="fav-card">
+              <div key={pelicula.id} className="card">
                 <img src={"https://image.tmdb.org/t/p/w500" + pelicula.poster_path} alt={pelicula.title} />
                 <h3>{pelicula.title}</h3>
                 <p>{pelicula.overview}</p>
@@ -141,10 +141,10 @@ class Favorites extends Component {
         </div>
 
         <h2>Series favoritas</h2>
-        <div className="favoritos-container">
+        <div className="card-container">
           {this.state.series.length === 0 ? <p>No hay series en favoritos.</p> :
             this.state.series.map((serie) => (
-              <div key={serie.id} className="fav-card">
+              <div key={serie.id} className="card">
                 <img src={"https://image.tmdb.org/t/p/w500" + serie.poster_path} alt={serie.name} />
                 <h3>{serie.name}</h3>
                 <p>{serie.overview}</p>
