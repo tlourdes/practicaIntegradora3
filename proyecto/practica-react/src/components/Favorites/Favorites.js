@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import MoviesCard from "../MoviesCard/MoviesCard";
+import SeriesCard from "../SeriesCard/SeriesCard";
 
 class Favorites extends Component {
   constructor(props) {
@@ -55,101 +57,76 @@ class Favorites extends Component {
       fetchPendientes += favSeries.length;
 
       for (let i = 0; i < favSeries.length; i++) {
-        fetch("https://api.themoviedb.org/3/tv/" + favSeries[i] + "?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es")
-          .then(res => res.json())
-          .then(data => {
+        fetch(
+          "https://api.themoviedb.org/3/tv/" +
+            favSeries[i] +
+            "?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es"
+        )
+          .then((res) => res.json())
+          .then((data) => {
             series.push(data);
-            let nuevasSeries = series;
-            this.setState({ series: nuevasSeries });
+            this.setState({ series: [...series] });
 
             fetchPendientes--;
-            if (fetchPendientes === 0) {
-              this.setState({ cargando: false });
-            }
+            if (fetchPendientes === 0) this.setState({ cargando: false });
           })
-          .catch(e => {
+          .catch((e) => {
             console.error(e);
             fetchPendientes--;
-            if (fetchPendientes === 0) {
-              this.setState({ cargando: false });
-            }
+            if (fetchPendientes === 0) this.setState({ cargando: false });
           });
       }
     }
-
 
     if (fetchPendientes === 0) {
       this.setState({ cargando: false });
     }
   }
 
-  // para que si borro un favorito deje de aparecer en la pagina
-
-    removeMovie = (id) => { // si lo escribo como function o si le pongo un let antes no anda el this.setState PREGUNTAR Q HACER !!
-    let favMovies = JSON.parse(localStorage.getItem("favoritosPelis"));
-     let actualizado = favMovies.filter(function(movieId) {
-      return movieId !== id;
-    });
-    localStorage.setItem("favoritosPelis", JSON.stringify(actualizado));
-    let nuevasPeliculas = this.state.peliculas.filter(function(peli) {
-      return peli.id !== id;
-    });
-    this.setState({ peliculas: nuevasPeliculas });
-  }
-
-  removeSerie = (id) => { // si lo escribo como function o si le pongo un let antesno anda el this.setState PREGUNTAR Q HACER !!
-      let favSeries = JSON.parse(localStorage.getItem("favoritosSeries"));
-      let actualizado = favSeries.filter(function(serieId) {
-      return serieId !== id;
-    });
-    localStorage.setItem("favoritosSeries", JSON.stringify(actualizado));
-    let nuevasSeries = this.state.series.filter(function(serie) {
-      return serie.id !== id;
-    });
-    this.setState({ series: nuevasSeries });
-  }
-
   render() {
     if (this.state.cargando) {
       return <p>Cargando...</p>;
-    
     }
 
     return (
       <React.Fragment>
-        <h2>Películas favoritas</h2>
-        <div className="favoritos-container">
-          {this.state.peliculas.length === 0 ? <p>No hay películas en favoritos.</p> :
-            this.state.peliculas.map((pelicula) => (
-              <div key={pelicula.id} className="fav-card">
-                <img src={"https://image.tmdb.org/t/p/w500" + pelicula.poster_path} alt={pelicula.title} />
-                <h3>{pelicula.title}</h3>
-                <p>{pelicula.overview}</p>
-                <Link to={"/pelicula/" + pelicula.id}>
-        <button>Ir a detalle</button>
-      </Link>
-                <button onClick={() => this.removeMovie(pelicula.id)}>Eliminar de favoritos</button>
-              </div>
-            ))
-          }
-        </div>
+        <section>
+          <h2>Películas favoritas</h2>
+          <div className="card-container">
+            {this.state.peliculas.length === 0 ? (
+              <p>No hay películas en favoritos.</p>
+            ) : (
+              this.state.peliculas.map((pelicula) => (
+                <MoviesCard
+                  key={pelicula.id}
+                  id={pelicula.id}
+                  image={pelicula.poster_path}
+                  name={pelicula.title}
+                  description={pelicula.overview}
+                />
+              ))
+            )}
+          </div>
+        </section>
 
-        <h2>Series favoritas</h2>
-        <div className="favoritos-container">
-          {this.state.series.length === 0 ? <p>No hay series en favoritos.</p> :
-            this.state.series.map((serie) => (
-              <div key={serie.id} className="fav-card">
-                <img src={"https://image.tmdb.org/t/p/w500" + serie.poster_path} alt={serie.name} />
-                <h3>{serie.name}</h3>
-                <p>{serie.overview}</p>
-                <Link to={"/serie/" + serie.id}>
-        <button>Ir a detalle</button>
-      </Link>
-                <button onClick={() => this.removeSerie(serie.id)}>Eliminar de favoritos</button>
-              </div>
-            ))
-          }
-        </div>
+        <section>
+          <h2>Series favoritas</h2>
+          <div className="card-container">
+            {this.state.series.length === 0 ? (
+              <p>No hay series en favoritos.</p>
+            ) : (
+              this.state.series.map((serie) => (
+                <SeriesCard
+                  key={serie.id}
+                  id={serie.id}
+                  image={serie.poster_path}
+                  name={serie.name}
+                  description={serie.overview}
+                />
+              ))
+            )}
+          </div>
+        </section>
       </React.Fragment>
     );
   }

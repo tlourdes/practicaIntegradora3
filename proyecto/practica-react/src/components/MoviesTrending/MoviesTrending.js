@@ -21,7 +21,7 @@ class MoviesTrending extends Component {
     return (
       <section>
         <h2 class='titulos'>Películas trending</h2>
-        <div className="card-container">
+        <div class="card-container">
           {this.state.movies.length === 0 ? (
             <h3>Cargando...</h3>
           ) : (

@@ -61,11 +61,11 @@ class ResultadosBusqueda extends Component {
     }
 
     return (
-      <div>
+      <section>
         <h2>Resultados de búsqueda</h2>
-        <div className="grid-resultados">
+        <div className="card-container">
           {resultados.map((item) => {
-            let titulo = item.title || item.name;
+            let titulo = item.title || item.name; //la doble barra va?
 
             return (
               <div key={item.id} className="card">
@@ -80,7 +80,7 @@ class ResultadosBusqueda extends Component {
             );
           })}
         </div>
-      </div>
+      </section>
     );
   }
 }
