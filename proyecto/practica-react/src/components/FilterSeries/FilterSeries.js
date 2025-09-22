@@ -14,7 +14,7 @@ class FilterSeries extends Component {
 
   render() {
     return (
-      <div>
+      <div className="search">
         <input
           type="text"
           placeholder="Buscar serie..."

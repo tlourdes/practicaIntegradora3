@@ -14,15 +14,16 @@ class VerTodasPeliculasCartel extends Component {
       peliculas: [],
       cargando: true,
       MostrarMas: 8,
-      peliculasFiltradas : []
+      peliculasFiltradas : [],
+      pagina: 1
     };
   }
 
   componentDidMount() {
-    fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=1')
+    fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ peliculas: data.results, peliculasFiltradas: data.results, cargando: false });
+        this.setState({ peliculas: data.results, peliculasFiltradas: data.results, cargando: false, pagina: this.state.pagina + 1 });
       })
       .catch((error) => {
         console.error('Error al obtener las películas:', error);
@@ -30,7 +31,17 @@ class VerTodasPeliculasCartel extends Component {
       });
   }
 
-  MostrarMasPeliculas = () => { // aca nose si le tendria q poner un let peor si le pongo un let no m funciona el this.
+  MostrarMasPeliculas = () => {
+    fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ peliculas: data.results.concat(data.results), peliculasFiltradas: data.results, cargando: false, pagina: this.state.pagina + 1 });
+      })
+      .catch((error) => {
+        console.error('Error al obtener las películas:', error);
+        this.setState({ cargando: false });
+      });
+    
     this.setState((a) => ({
       MostrarMas: a.MostrarMas + 4,
     }));
