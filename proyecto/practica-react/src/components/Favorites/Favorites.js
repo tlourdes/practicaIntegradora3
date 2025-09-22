@@ -12,7 +12,6 @@ class Favorites extends Component {
       cargando: true
     };
   }
-
   componentDidMount() {
     let peliculas = [];
     let series = [];
@@ -75,8 +74,7 @@ class Favorites extends Component {
             fetchPendientes--;
             if (fetchPendientes === 0) this.setState({ cargando: false });
           });
-      }
-    }
+      }}
 
     if (fetchPendientes === 0) {
       this.setState({ cargando: false });
@@ -85,8 +83,7 @@ class Favorites extends Component {
 
   render() {
     if (this.state.cargando) {
-      return <p>Cargando...</p>;
-    }
+      return <p>Cargando...</p>;  }
 
     return (
       <React.Fragment>

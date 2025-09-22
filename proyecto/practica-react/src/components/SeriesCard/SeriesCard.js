@@ -11,7 +11,7 @@ constructor(props) {
         };
       }
 
-        componentDidMount(){
+      componentDidMount(){
     let traido = localStorage.getItem("favoritosSeries");
     if(traido !== null){
         let parseado = JSON.parse(traido);let encontrado = false;
@@ -26,7 +26,6 @@ constructor(props) {
         }
     }
 }
-
     //boton agregar
 
     agregarFavoritos(){
@@ -53,7 +52,7 @@ constructor(props) {
         //boton borrar
     borrarFavoritos(){
 
-        let traido = localStorage.getItem("favoritosSeries")
+      let traido = localStorage.getItem("favoritosSeries")
        if (traido !== null) {
       let parseado = JSON.parse(traido);
       let filtrado = parseado.filter(id => id !== this.props.id);
@@ -91,7 +90,6 @@ constructor(props) {
       <h3>{this.props.name}</h3>
       
       <button className="botonDescripción" onClick={() => this.verDescripcion()}>{this.state.textoBoton}</button>
-
       {descripcion}
 
       <div className="card-buttons">
