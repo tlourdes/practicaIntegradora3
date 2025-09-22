@@ -26,12 +26,6 @@ class ResultadosBusqueda extends Component {
     console.log("location.search:", this.props.location.search);
     console.log("query:", busqueda, "type:", tipo);
 
-    if (!busqueda || !tipo) {
-      console.warn("Faltan parámetros de búsqueda");
-      this.setState({ resultados: [] });
-      return;
-    }
-
     const apiKey = "71f9dd51c9b661ac3cc8a99b148402c4"; 
 
     fetch(
@@ -39,8 +33,15 @@ class ResultadosBusqueda extends Component {
     )
       .then((res) => res.json())
       .then((datos) => {
+        let resultadosObtenidos;
+        if (datos) {
+          resultadosObtenidos = datos.results;
+        } else {
+          resultadosObtenidos = [];
+        }
+
         this.setState({
-          resultados: datos.results || [],
+          resultados: resultadosObtenidos,
         });
       })
       .catch((err) => {
@@ -65,16 +66,31 @@ class ResultadosBusqueda extends Component {
         <h2>Resultados de búsqueda</h2>
         <div className="card-container">
           {resultados.map((item) => {
-            let titulo = item.title || item.name; //la doble barra va?
+            let titulo;
+
+            if (item.title) {
+              titulo = item.title;
+            } else if (item.name) {
+              titulo = item.name;
+            } else {
+              titulo = "Título no disponible";
+            }
+
+            let poster;
+            if (item.poster_path) {
+              poster = (
+                <img
+                  src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
+                  alt={titulo}
+                />
+              );
+            } else {
+              poster = null;
+            }
 
             return (
               <div key={item.id} className="card">
-                {item.poster_path && (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w342${item.poster_path}`}
-                    alt={titulo}
-                  />
-                )}
+                {poster}
                 <h3>{titulo}</h3>
               </div>
             );
