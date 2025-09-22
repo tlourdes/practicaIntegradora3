@@ -42,7 +42,7 @@ class MoviesTrending extends Component {
           )}
         </div>
 
-        <Link to="/PeliculasTrending">
+        <Link to="/PeliculasTrending">ºº
   <button class="botones">Ver todas</button>
 </Link>
 

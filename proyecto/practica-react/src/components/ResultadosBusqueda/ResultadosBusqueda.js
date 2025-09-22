@@ -8,7 +8,7 @@ class ResultadosBusqueda extends Component {
     this.state = {
       resultados: [],
       tipo: "",
-      cragando: true
+      cargando: true
     };
   }
 
@@ -59,6 +59,10 @@ class ResultadosBusqueda extends Component {
     const resultados = this.state.resultados;
     const tipo = this.state.tipo;
 
+    if (this.state.cargando) {
+      return <p>Cargando...</p>;
+    }
+
     if (resultados.length === 0) {
       return (
         <div>
@@ -106,7 +110,7 @@ class ResultadosBusqueda extends Component {
     return (
       <section>
         <h2>Resultados de búsqueda</h2>
-        {this.state.cargando ? <p>Cargando...</p> : contenido}
+        {contenido}
       </section>
     );
   }
