@@ -36,8 +36,13 @@ class ResultadosBusqueda extends Component {
     )
       .then((res) => res.json())
       .then((datos) => {
-        let resultadosObtenidos = datos ? datos.results : [];
-
+        let resultadosObtenidos;
+        if (datos) {
+          resultadosObtenidos = datos.results;
+        } else {
+          resultadosObtenidos = [];
+        }
+        
         this.setState({
           resultados: resultadosObtenidos,
           tipo: tipo
@@ -49,7 +54,8 @@ class ResultadosBusqueda extends Component {
   }
 
   render() {
-    const { resultados, tipo } = this.state;
+    const resultados = this.state.resultados;
+    const tipo = this.state.tipo;
 
     if (resultados.length === 0) {
       return (
@@ -63,7 +69,7 @@ class ResultadosBusqueda extends Component {
 
     if (tipo === "movie") {
       contenido = (
-        <>
+       
           <div className="card-container">
           {resultados.map((pelicula) => (
             <MoviesCard
@@ -76,11 +82,11 @@ class ResultadosBusqueda extends Component {
             
           ))}
           </div>
-        </>
+    
       );
     } else if(tipo === "tv") {
       contenido = (
-        <>
+      
           <div className="card-container">
           {resultados.map((serie) => (
             <SeriesCard
@@ -92,7 +98,7 @@ class ResultadosBusqueda extends Component {
             />
           ))}
           </div>
-        </>
+    
       );
     }
     return (
