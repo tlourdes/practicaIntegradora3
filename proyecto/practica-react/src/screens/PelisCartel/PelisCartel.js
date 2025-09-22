@@ -14,6 +14,7 @@ class VerTodasPeliculasCartel extends Component {
       peliculas: [],
       cargando: true,
       MostrarMas: 8,
+      peliculasFiltradas : []
     };
   }
 
@@ -21,7 +22,7 @@ class VerTodasPeliculasCartel extends Component {
     fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=1')
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ peliculas: data.results, cargando: false });
+        this.setState({ peliculas: data.results, peliculasFiltradas: data.results, cargando: false });
       })
       .catch((error) => {
         console.error('Error al obtener las películas:', error);
@@ -35,23 +36,32 @@ class VerTodasPeliculasCartel extends Component {
     }));
   };
 
+  filtrarPeliculas = (texto) => {
+  const busqueda = texto.toLowerCase();
+  const filtradas = this.state.peliculasFiltradas.filter(pelicula =>
+    pelicula.title.toLowerCase().includes(busqueda)
+  );
+  this.setState({ peliculas: filtradas });
+};
+
   render() {
     const peliculas = this.state.peliculas;
     const MostrarMas = this.state.MostrarMas;
     const cargando = this.state.cargando;
 
 
-    if (cargando) {return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>};
+    if (this.state.cargando) {return <React.Fragment> <Navbar /><p>Cargando...</p><Footer /></React.Fragment>};
 
     let botonVerMas = "";
   if (MostrarMas < peliculas.length) {
     botonVerMas = <VerMas onClick={this.MostrarMasPeliculas} />;
-  } // solo aparece el boton si hay mas para mostrar
+  } 
 
     return (
       <React.Fragment>
         <Navbar />
-        <FilterMovie peliculas={peliculas} />
+        <FilterMovie filtrar={this.filtrarPeliculas} peliculas={this.state.peliculas}/>
+
 
       <section>
         <h2>Todas las películas en cartel</h2>

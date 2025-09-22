@@ -1,0 +1,30 @@
+import React, { Component } from "react";
+
+class FilterSeries extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { busqueda: "" };
+  }
+
+  cambiarBusqueda = (e) => {
+    const texto = e.target.value;
+    this.setState({ busqueda: texto });
+    this.props.filtrar(texto); 
+  };
+
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          placeholder="Buscar serie..."
+          value={this.state.busqueda}
+          onChange={this.cambiarBusqueda}
+        />
+      </div>
+    );
+  }
+}
+
+export default FilterSeries;
+

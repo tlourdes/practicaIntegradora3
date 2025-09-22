@@ -5,6 +5,7 @@ import MoviesCard from '../../components/MoviesCard/MoviesCard';
 import VerMas from '../../components/VerMas/VerMas';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
+import FilterMovie from '../../components/FilterMovie/FilterMovie';
 
 class VerTodasPeliculasTrending extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class VerTodasPeliculasTrending extends Component {
       cargando: true,
       MostrarMas: 8,
       pagina: 1,
+      peliculasFiltradas : []
     };
   }
 
@@ -21,7 +23,7 @@ class VerTodasPeliculasTrending extends Component {
     fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ peliculas: data.results, cargando: false, pagina: this.state.pagina + 1 });
+        this.setState({ peliculas: data.results,  peliculasFiltradas: data.results, cargando: false, pagina: this.state.pagina + 1 });
       })
       .catch((error) => {
         console.error('Error al obtener las películas:', error);
@@ -33,7 +35,7 @@ class VerTodasPeliculasTrending extends Component {
     fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
     .then((response) => response.json())
     .then((data) => {
-      this.setState({ peliculas: data.results.concat(data.results), cargando: false, pagina: this.state.pagina + 1 });
+      this.setState({ peliculas: data.results.concat(data.results), peliculasFiltradas: data.results, cargando: false, pagina: this.state.pagina + 1 });
     })
     .catch((error) => {
       console.error('Error al obtener las películas:', error);
@@ -45,6 +47,13 @@ class VerTodasPeliculasTrending extends Component {
       MostrarMas: a.MostrarMas + 4,
     }));
   };
+    filtrarPeliculas = (texto) => {
+  const busqueda = texto.toLowerCase();
+  const filtradas = this.state.peliculasFiltradas.filter(pelicula =>
+    pelicula.title.toLowerCase().includes(busqueda)
+  );
+  this.setState({ peliculas: filtradas });
+};
 
   render() {
     const peliculas = this.state.peliculas;
@@ -60,6 +69,7 @@ let botonVerMas = "";
     return (
       <React.Fragment>
         <Navbar />
+         <FilterMovie filtrar={this.filtrarPeliculas} peliculas={this.state.peliculas}/>
       
       <section>
         <h2>Todas las películas trending</h2>

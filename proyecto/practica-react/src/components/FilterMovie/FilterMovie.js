@@ -1,55 +1,32 @@
 import React, { Component } from "react";
-import MoviesCard from '../../components/MoviesCard/MoviesCard';
 
 class FilterMovie extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      busqueda: "",
-    };
+    this.state = { busqueda: "" };
   }
 
   cambiarBusqueda = (e) => {
-    this.setState({ busqueda: e.target.value });
+    const texto = e.target.value;
+    this.setState({ busqueda: texto });
+    this.props.filtrar(texto); 
   };
+  
 
   render() {
-    const peliculas  = this.props.peliculas;
-    const busqueda = this.state.busqueda;
-
-    const resultados = peliculas.filter(p => {
-    const titulo = p.title.toLowerCase();
-    const buscar = busqueda.toLowerCase();
-    for (let i = 0; i <= titulo.length - buscar.length; i++) {
-        if (titulo.slice(i, i + buscar.length) === buscar) return true;
-    }
-    return false;
-    });
-
-
     return (
       <div>
         <input
           type="text"
           placeholder="Buscar película..."
-          value={busqueda}
+          value={this.state.busqueda}
           onChange={this.cambiarBusqueda}
         />
-        <div className="card-container">
-          {resultados.map((pelicula) => (
-            <MoviesCard
-              key={pelicula.id}
-              id={pelicula.id}
-              image={pelicula.poster_path}
-              name={pelicula.title}
-              description={pelicula.overview}
-            />
-          ))}
-        </div>
       </div>
     );
   }
 }
 
 export default FilterMovie;
+
 
