@@ -17,9 +17,15 @@ class FilterMovie extends Component {
     const peliculas  = this.props.peliculas;
     const busqueda = this.state.busqueda;
 
-    const resultados = peliculas.filter(p =>
-      p.title.toLowerCase().includes(busqueda.toLowerCase())
-    );
+    const resultados = peliculas.filter(p => {
+    const titulo = p.title.toLowerCase();
+    const buscar = busqueda.toLowerCase();
+    for (let i = 0; i <= titulo.length - buscar.length; i++) {
+        if (titulo.slice(i, i + buscar.length) === buscar) return true;
+    }
+    return false;
+    });
+
 
     return (
       <div>
