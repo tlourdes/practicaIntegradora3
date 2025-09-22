@@ -21,7 +21,7 @@ class Buscador extends Component {
   ejecutarBusqueda(e) {
     e.preventDefault();
     this.props.history.push(
-      `/ResultadosBusqueda?query=${this.state.busqueda}&type=${this.state.tipo}`
+      `/ResultadosBusqueda/${this.state.busqueda}/${this.state.tipo}`
     );
   }
 

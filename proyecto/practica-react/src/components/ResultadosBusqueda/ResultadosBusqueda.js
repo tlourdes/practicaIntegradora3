@@ -7,7 +7,8 @@ class ResultadosBusqueda extends Component {
     super(props);
     this.state = {
       resultados: [],
-      tipo: ""
+      tipo: "",
+      cragando: true
     };
   }
 
@@ -22,9 +23,9 @@ class ResultadosBusqueda extends Component {
   }
 
   buscarResultados() {
-    const parametros = new URLSearchParams(this.props.location.search);
-    const busqueda = parametros.get("query");
-    const tipo = parametros.get("type");
+
+    const busqueda = this.props.match.params.query;
+    const tipo = this.props.match.params.type;
 
     console.log("location.search:", this.props.location.search);
     console.log("query:", busqueda, "type:", tipo);
@@ -45,7 +46,8 @@ class ResultadosBusqueda extends Component {
         
         this.setState({
           resultados: resultadosObtenidos,
-          tipo: tipo
+          tipo: tipo,
+          cargando: false
         });
       })
       .catch((err) => {
@@ -104,7 +106,7 @@ class ResultadosBusqueda extends Component {
     return (
       <section>
         <h2>Resultados de búsqueda</h2>
-        {contenido}
+        {this.state.cargando ? <p>Cargando...</p> : contenido}
       </section>
     );
   }
