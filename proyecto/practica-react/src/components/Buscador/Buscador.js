@@ -1,38 +1,44 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 class Buscador extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      busqueda: "",
-      tipo: "movie", 
+       busqueda: "",
+      tipo: "movie",
     };
   }
 
   cambiarTexto(e) {
-    this.setState({ busqueda: e.target.value });
+    this.setState({ busqueda: e.target.value.toLowerCase() });
   }
 
   cambiarTipo(e) {
     this.setState({ tipo: e.target.value });
   }
 
+  ejecutarBusqueda(e) {
+    e.preventDefault();
+    this.props.history.push(
+      `/ResultadosBusqueda?query=${this.state.busqueda}&type=${this.state.tipo}`
+    );
+  }
+
   render() {
     return (
-      <form action="/ResultadosBusqueda" method="get" className="search">
+          <form onSubmit={(e) => this.ejecutarBusqueda(e)} className="search">
         <input
           type="text"
-          name="query" 
           value={this.state.busqueda}
           onChange={(e) => this.cambiarTexto(e)}
           placeholder="Buscar..."
         />
 
-<div className="radios">
+        <div className="radios">
           <label>
-            <input
-              type="radio"
-              name="type" 
+               <input
+               type="radio"
               value="movie"
               checked={this.state.tipo === "movie"}
               onChange={(e) => this.cambiarTipo(e)}
@@ -42,7 +48,6 @@ class Buscador extends Component {
           <label>
             <input
               type="radio"
-              name="type"
               value="tv"
               checked={this.state.tipo === "tv"}
               onChange={(e) => this.cambiarTipo(e)}
@@ -51,10 +56,10 @@ class Buscador extends Component {
           </label>
         </div>
 
-        <button type="submit" class='botones'>Buscar</button>
+        <button type="submit" className="botones">Buscar</button>
       </form>
     );
   }
 }
 
-export default Buscador;
+export default withRouter(Buscador);
