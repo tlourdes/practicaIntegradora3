@@ -85,7 +85,7 @@ class Favorites extends Component {
   }
 
   // para que si borro un favorito deje de aparecer en la pagina
-  removeMovie = (id) => { // si lo escribo como function o si le pongo un let antes no anda el this.setState PREGUNTAR Q HACER !!
+  removeMovie = (id) => {  
     let favMovies = JSON.parse(localStorage.getItem("favoritosPelis"));
 
     let actualizado = favMovies.filter(function(movieId) {
@@ -99,7 +99,7 @@ class Favorites extends Component {
     this.setState({ peliculas: nuevasPeliculas });
   }
 
-  removeSerie = (id) => { // si lo escribo como function o si le pongo un let antesno anda el this.setState PREGUNTAR Q HACER !!
+  removeSerie = (id) => {  
       let favSeries = JSON.parse(localStorage.getItem("favoritosSeries"));
 
     let actualizado = favSeries.filter(function(serieId) {

@@ -18,7 +18,7 @@ class FilterMovie extends Component {
       <div className="search">
         <input
           type="text"
-          placeholder="Buscar película..."
+          placeholder="Filtrar película..."
           value={this.state.busqueda}
           onChange={this.cambiarBusqueda}
         />

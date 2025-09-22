@@ -81,7 +81,7 @@ class DetalleS extends Component {
   
 
     return (
-        serie=== null || serie=== undefined ? ( // esto (||) lo vimos o no? xq sino puedo hacer !serie pero no se si lo vimos
+        !serie ? (   //si no es null ni undefined
       <h3>Cargando...</h3> 
     ) : (
       <div className='sectionDetalle'>

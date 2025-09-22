@@ -83,7 +83,7 @@ class DetalleP extends Component {
     
 
     return (
-       movie=== null || movie=== undefined ? ( // esto (||) lo vimos o no? xq sino puedo hacer !movie pero no se si lo vimos
+       !movie ? (   //si no es null ni undefined
       <h3>Cargando...</h3> 
     ) : (
       <div className='sectionDetalle'>
@@ -102,7 +102,7 @@ class DetalleP extends Component {
              <p>Género: {generos}</p>
 
 
-            {this.state.favorito ? ( //esto esta bien ponerlo asi?
+            {this.state.favorito ? (  
               <button className="botones" onClick={() => this.borrarFavoritos()}>
                 Eliminar de favoritos
               </button>

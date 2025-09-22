@@ -17,7 +17,7 @@ class FilterSeries extends Component {
       <div className="search">
         <input
           type="text"
-          placeholder="Buscar serie..."
+          placeholder="Filtrar serie..."
           value={this.state.busqueda}
           onChange={this.cambiarBusqueda}
         />
