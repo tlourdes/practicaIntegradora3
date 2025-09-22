@@ -2,7 +2,7 @@ import React from "react";
 
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import ResultadosBusqueda from "../../components/ResultadosBusqueda/ResultadosBusqueda";
+import ResultadosBusqueda from "../../components/ResultadosBusqueda/SearchResults";
 
 function Results(props) {
   return (

@@ -5,6 +5,7 @@ import MoviesCard from '../../components/MoviesCard/MoviesCard';
 import VerMas from '../../components/VerMas/VerMas';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
+import FilterMovie from '../../components/Filter/Filter';
 
 class VerTodasPeliculasCartel extends Component {
   constructor(props) {
@@ -50,7 +51,8 @@ class VerTodasPeliculasCartel extends Component {
     return (
       <React.Fragment>
         <Navbar />
-      
+        <FilterMovie peliculas={peliculas} />
+
       <section>
         <h2>Todas las películas en cartel</h2>
         <div className="card-container">
