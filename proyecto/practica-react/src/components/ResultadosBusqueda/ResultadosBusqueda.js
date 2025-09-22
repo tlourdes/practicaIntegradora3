@@ -64,6 +64,30 @@ class ResultadosBusqueda extends Component {
     return (
       <section>
         <h2>Resultados de búsqueda</h2>
+{if(tipo === 'movie'){        
+  <h3>Películas</h3> } 
+
+this.state.peliculas.map((pelicula) => (
+                <MoviesCard
+                  key={pelicula.id}
+                  id={pelicula.id}
+                  image={pelicula.poster_path}
+                  name={pelicula.title}
+                  description={pelicula.overview}
+                />
+
+  else if (tipo === 'tv')
+  { <h3>Series</h3> }
+  this.state.series.map((serie) => (
+    <SeriesCard
+      key={serie.id}
+      id={serie.id}
+      image={serie.poster_path}
+      name={serie.name}
+      description={serie.overview}
+    />
+  }
+
         <div className="card-container">
           {resultados.map((item) => {
             let titulo;
