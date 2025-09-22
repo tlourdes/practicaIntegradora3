@@ -14,8 +14,8 @@ class FilterMovie extends Component {
   };
 
   render() {
-    const { peliculas } = this.props;
-    const { busqueda } = this.state;
+    const peliculas  = this.props.peliculas;
+    const busqueda = this.state.busqueda;
 
     const resultados = peliculas.filter(p =>
       p.title.toLowerCase().includes(busqueda.toLowerCase())
