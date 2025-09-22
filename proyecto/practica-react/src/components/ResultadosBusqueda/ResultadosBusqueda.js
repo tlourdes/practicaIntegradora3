@@ -78,7 +78,7 @@ class ResultadosBusqueda extends Component {
           </div>
         </>
       );
-    } else (tipo === "tv") {
+    } else if(tipo === "tv") {
       contenido = (
         <>
           <div className="card-container">
