@@ -13,14 +13,15 @@ class VerTodasPeliculasTrending extends Component {
       peliculas: [],
       cargando: true,
       MostrarMas: 8,
+      pagina: 1,
     };
   }
 
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/trending/movie/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=1")
+    fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ peliculas: data.results, cargando: false });
+        this.setState({ peliculas: data.results, cargando: false, pagina: this.state.pagina + 1 });
       })
       .catch((error) => {
         console.error('Error al obtener las películas:', error);
@@ -29,6 +30,17 @@ class VerTodasPeliculasTrending extends Component {
   }
 
   MostrarMasPeliculas = () => {
+    fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
+    .then((response) => response.json())
+    .then((data) => {
+      this.setState({ peliculas: data.results.concat(data.results), cargando: false, pagina: this.state.pagina + 1 });
+    })
+    .catch((error) => {
+      console.error('Error al obtener las películas:', error);
+      this.setState({ cargando: false });
+    });
+
+
     this.setState((a) => ({
       MostrarMas: a.MostrarMas + 4,
     }));

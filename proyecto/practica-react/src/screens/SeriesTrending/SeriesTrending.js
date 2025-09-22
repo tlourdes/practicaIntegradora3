@@ -13,14 +13,15 @@ class VerTodasSeriesTrending extends Component {
       series: [],
       cargando: true,
       MostrarMas: 8,
+      pagina: 1,
     };
   }
 
   componentDidMount() {
-    fetch('https://api.themoviedb.org/3/trending/tv/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=1')
+    fetch(`https://api.themoviedb.org/3/trending/tv/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ series: data.results, cargando: false });
+        this.setState({ series: data.results, cargando: false, pagina: this.state.pagina + 1 });
       })
       .catch((error) => {
         console.error('Error al obtener las series:', error);
@@ -28,7 +29,19 @@ class VerTodasSeriesTrending extends Component {
       });
   }
 
-  MostrarMasSeries = () => { // aca nose si le tendria q poner un let pero si le pongo un let no m funciona el this.
+  MostrarMasSeries = () => {
+
+    fetch(`https://api.themoviedb.org/3/trending/tv/day?api_key=71f9dd51c9b661ac3cc8a99b148402c4&language=es-ES&page=${this.state.pagina}`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ series: this.state.series.concat(data.results), cargando: false, pagina: this.state.pagina + 1 });
+      })
+      .catch((error) => {
+        console.error('Error al obtener las series:', error);
+        this.setState({ cargando: false });
+      });
+  
+
     this.setState((a) => ({
       MostrarMas: a.MostrarMas + 4,
     }));
